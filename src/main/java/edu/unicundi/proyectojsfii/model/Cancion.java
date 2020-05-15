@@ -25,6 +25,8 @@ public class Cancion implements Serializable{
     
     private String precio;
     
+    private boolean seleccion;
+    
 
     public Cancion(Integer id, String nombre, String duracion, String nombreArtista, String formato , String precio) {
         this.id = id;
@@ -81,6 +83,14 @@ public class Cancion implements Serializable{
 
     public void setPrecio(String precio) {
         this.precio = precio;
+    }
+
+    public boolean isSeleccion() {
+        return seleccion;
+    }
+
+    public void setSeleccion(boolean seleccion) {
+        this.seleccion = seleccion;
     }
     
 }

@@ -7,34 +7,48 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        
-        <p:dataTable value="#{formularioTabla.listaCancion}" var ="cancion" >
-            <p:column headerText="Id">
-                <h:outputText value="#{cancion.id}" /> 
-            </p:column>
-            <p:column headerText="Nombre">
-                <h:outputText value="#{cancion.nombre}" /> 
-            </p:column>
-            <p:column headerText="Duración">
-                <h:outputText value="#{cancion.duracion}" /> 
-            </p:column>
-            <p:column headerText="Artista">
-                <h:outputText value="#{cancion.nombreArtista}" /> 
-            </p:column>  
-            <p:column headerText="Formato">
-                <h:outputText value="#{cancion.formato}" /> 
-            </p:column>  
-            <p:column headerText="Precio">
-                <h:outputText value="#{cancion.precio}" /> 
-            </p:column>  
-            <p:column headerText="Eliminar">
-                
-            </p:column>
-            <p:column headerText="Modificar">
-                
-            </p:column>
-        </p:dataTable>
-        
-    </h:body>
+        <h:form id="formulario" >
+            <p:growl id="msg" /> 
+            <p:dataTable value="#{formularioTabla.listaCancion}" var ="cancion" >
+                <p:column headerText="Seleccion">
+                    <h:selectBooleanCheckbox value="#{cancion.seleccion}"/>
+                </p:column>
+                <p:column headerText="Id">
+                    <h:outputText value="#{cancion.id}" /> 
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{cancion.nombre}" /> 
+                </p:column>
+                <p:column headerText="Duración">
+                    <h:outputText value="#{cancion.duracion}" /> 
+                </p:column>
+                <p:column headerText="Artista">
+                    <h:outputText value="#{cancion.nombreArtista}" /> 
+                </p:column>  
+                <p:column headerText="Formato">
+                    <h:outputText value="#{cancion.formato}" /> 
+                </p:column>  
+                <p:column headerText="Precio">
+                    <h:outputText value="#{cancion.precio}" /> 
+                </p:column>
+                <p:column headerText="Modificar">
+
+                </p:column>
+            </p:dataTable>
+
+            <p:commandButton actionListener="#{cancionService.eliminar()}" value="Eliminar" update="formulario" 
+                             icon="ui-icon-trash" >
+                <p:confirm message="¿Seguro quiere eliminar?" header="aviso" icon="ui-icon-alert" />
+            </p:commandButton>    
+
+               <p:confirmDialog global="true">
+               <p:commandButton  value="Si" type="button" icon="ui-icon-check"
+                                 styleClass="ui-confirmdialog-yes" />
+               <p:commandButton  value="No" type="button" icon="ui-icon-close"
+                                 styleClass="ui-confirmdialog-no" />
+            </p:confirmDialog>        
+
+    </h:form>
+</h:body>
 </html>
 
