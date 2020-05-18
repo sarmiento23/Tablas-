@@ -6,26 +6,41 @@
 package edu.unicundi.proyectojsfii.beans.logica;
 
 import edu.unicundi.proyectojsfii.model.Cancion;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
- * @author ASUS-PC
+ * @author Valentina
  */
 @Named(value = "cancionService")
-@RequestScoped
-public class CancionService {
+@SessionScoped
+public class CancionService implements Serializable {
+    
+    private Integer id;
 
+    private String nombre;
+
+    private String duracion;
+
+    private String nombreArtista;
+
+    private String formato;
+
+    private String precio;
     private List<Cancion> listaCancion;
     private List<Cancion> listaEliminados;
 
     public CancionService() {
+        
         listaCancion = new ArrayList<>();
         listaEliminados = new ArrayList<>();
     }
@@ -44,8 +59,28 @@ public class CancionService {
         listaCancion.add(new Cancion(9, "Get Lucky", "4:25", "Daft Punk", "CD", "$18.000"));
         listaCancion.add(new Cancion(10, "Crazy", "1:00", "Gnarls Barkley", "CD", "$35.000"));
         listaCancion.add(new Cancion(11, "Hips don't lie", "5:10", "Shakira", "CD", "$15.000"));
+         
+    }
+    
+    public void actualizar(RowEditEvent event) {
+            Cancion c = (Cancion) event.getObject();
+            this.nombre=c.getNombre();
+            this.formato=c.getFormato();
+            this.duracion=c.getDuracion();
+            this.nombreArtista=c.getNombreArtista();
+            this.precio=c.getPrecio();
+            c.setNombre(nombre);
+            c.setDuracion(duracion);
+            c.setFormato(formato);
+            c.setNombreArtista(nombreArtista);
+            c.setPrecio(precio);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Modificado con exito"));             
     }
 
+    public void cancelar(RowEditEvent event) {
+      FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cancelar"));
+    }
+     
     public String eliminar() {
         System.out.println ("Entro a eliminar");
         
@@ -66,7 +101,7 @@ public class CancionService {
 
         return "formularioTabla";
     }
-
+    
     public List<Cancion> getListaCancion() {
         return listaCancion;
     }
@@ -74,5 +109,52 @@ public class CancionService {
     public void setListaCancion(List<Cancion> listaCancion) {
         this.listaCancion = listaCancion;
     }
+    
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
+    }
+
+    public String getNombreArtista() {
+        return nombreArtista;
+    }
+
+    public void setNombreArtista(String nombreArtista) {
+        this.nombreArtista = nombreArtista;
+    }
+
+    public String getFormato() {
+        return formato;
+    }
+
+    public void setFormato(String formato) {
+        this.formato = formato;
+    }
+
+    public String getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(String precio) {
+        this.precio = precio;
+    }
 }

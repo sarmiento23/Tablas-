@@ -7,9 +7,10 @@ package edu.unicundi.proyectojsfii.model;
 
 import java.io.Serializable;
 
+
 /**
  *
- * @author ASUS-PC
+ * @author Luz
  */
 public class Cancion implements Serializable{
     
@@ -36,7 +37,8 @@ public class Cancion implements Serializable{
         this.formato=formato;
         this.precio =precio;
     }        
-
+    
+    
     public Integer getId() {
         return id;
     }

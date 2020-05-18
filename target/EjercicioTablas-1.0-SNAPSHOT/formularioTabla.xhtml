@@ -2,39 +2,92 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        
-        <p:dataTable value="#{formularioTabla.listaCancion}" var ="cancion" >
+        <h:form id="formulario" >
+            <p:growl id="msg" /> 
+            <p:dataTable value="#{formularioTabla.listaCancion}" var ="cancion" editable="true">
+                <p:ajax event="rowEdit" listener="#{cancionService.actualizar}" update=":formulario:msg"/>
+                <p:ajax event="rowEditCancel" listener="#{cancionService.cancelar}" update=":formulario:msg"/>
+            <p:column headerText="Seleccion">
+                    <h:selectBooleanCheckbox value="#{cancion.seleccion}"/>
+                </p:column>    
             <p:column headerText="Id">
-                <h:outputText value="#{cancion.id}" /> 
+                    <h:outputText value="#{cancion.id}" /> 
             </p:column>
             <p:column headerText="Nombre">
-                <h:outputText value="#{cancion.nombre}" /> 
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{cancion.nombre}" /> 
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{cancion.nombre}"/>
+                    </f:facet>
+                </p:cellEditor>
             </p:column>
             <p:column headerText="Duración">
-                <h:outputText value="#{cancion.duracion}" /> 
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{cancion.duracion}" /> 
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{cancion.duracion}"/>
+                    </f:facet>
+                </p:cellEditor>
             </p:column>
             <p:column headerText="Artista">
-                <h:outputText value="#{cancion.nombreArtista}" /> 
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{cancion.nombreArtista}" /> 
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{cancion.nombreArtista}"/>
+                    </f:facet>
+                </p:cellEditor>
             </p:column>  
             <p:column headerText="Formato">
-                <h:outputText value="#{cancion.formato}" /> 
+                <p:cellEditor>
+                    <f:facet name="output">
+                         <h:outputText value="#{cancion.formato}" /> 
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{cancion.formato}"/>
+                    </f:facet>
+                </p:cellEditor>
             </p:column>  
             <p:column headerText="Precio">
-                <h:outputText value="#{cancion.precio}" /> 
+                <p:cellEditor>
+                    <f:facet name="output">
+                            <h:outputText value="#{cancion.precio}" /> 
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{cancion.precio}"/>
+                    </f:facet>
+                </p:cellEditor>
             </p:column>  
-            <p:column headerText="Eliminar">
-                
-            </p:column>
-            <p:column headerText="Modificar">
-                
-            </p:column>
-        </p:dataTable>
-        
-    </h:body>
+                <p:column headerText="Modificar">
+                          <p:rowEditor/>
+                </p:column>
+            
+       
+      </p:dataTable>
+            
+            <p:commandButton actionListener="#{cancionService.eliminar()}" value="Eliminar" update="formulario" 
+                             icon="ui-icon-trash" >
+                <p:confirm message="¿Seguro quiere eliminar?" header="aviso" icon="ui-icon-alert" />
+            </p:commandButton>    
+
+               <p:confirmDialog global="true">
+               <p:commandButton  value="Si" type="button" icon="ui-icon-check"
+                                 styleClass="ui-confirmdialog-yes" />
+               <p:commandButton  value="No" type="button" icon="ui-icon-close"
+                                 styleClass="ui-confirmdialog-no" />
+            </p:confirmDialog> 
+    </h:form>
+</h:body>
 </html>
 

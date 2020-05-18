@@ -7,20 +7,25 @@ package edu.unicundi.proyectojsfii.beans;
 
 import edu.unicundi.proyectojsfii.beans.logica.CancionService;
 import edu.unicundi.proyectojsfii.model.Cancion;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+
 
 /**
  *
- * @author ASUS-PC
+ * @author Luz
  */
 @Named(value = "formularioTabla")
-@RequestScoped
-public class FormularioTabla {
-
+@SessionScoped
+public class FormularioTabla  implements Serializable{
+    
+ 
+    
     private List<Cancion> listaCancion;
     
     @Inject
@@ -29,7 +34,7 @@ public class FormularioTabla {
     public FormularioTabla() {
         
     }
-    
+  
     @PostConstruct
     public void init(){
         this.listaCancion = service.getListaCancion();
@@ -42,5 +47,15 @@ public class FormularioTabla {
     public void setListaCancion(List<Cancion> listaCancion) {
         this.listaCancion = listaCancion;
     }        
+
+   
+
+    public CancionService getService() {
+        return service;
+    }
+
+    public void setService(CancionService service) {
+        this.service = service;
+    }
     
 }
